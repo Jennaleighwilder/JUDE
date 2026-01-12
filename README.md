@@ -22,7 +22,7 @@ Saint Jude does not save. Saint Jude witnesses.
 
 Contact for licensing and implementation:
 
-- **Email:** TheForgottenCode@gmail.com
+- **Email:** TheForgottenCode780@gmail.com
 - **Phone:** 423-388-8304
 
 ## What You Get
