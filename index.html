@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAINT JUDE™ - Medical System Abandonment Detection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+        :root {
+            --void: #0d0d0d;
+            --charcoal: #1a1a1a;
+            --slate: #2d2d2d;
+            --ash: #4a4a4a;
+            --bone: #e8e4e0;
+            --parchment: #d4cfc8;
+            --rust: #8b4513;
+            --blood: #722f37;
+            --blood-dark: #4a1f24;
+            --candle: #f4a460;
+            --candle-dim: #cd853f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--void);
+            color: var(--bone);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+            padding: 25px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--bone);
+            letter-spacing: 0.2em;
+        }
+
+        .logo::after {
+            content: '™';
+            font-size: 12px;
+            vertical-align: super;
+            opacity: 0.6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--parchment);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-link:hover { color: var(--candle); }
+
+        .cta-nav {
+            background: linear-gradient(135deg, var(--blood-dark) 0%, var(--blood) 100%);
+            color: var(--bone);
+            padding: 12px 24px;
+            border: none;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .cta-nav:hover {
+            background: linear-gradient(135deg, var(--blood) 0%, var(--rust) 100%);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 160px 0 120px;
+            background: 
+                radial-gradient(ellipse at center top, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, var(--void) 0%, var(--charcoal) 100%);
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .hero-content { max-width: 900px; }
+
+        .hero-eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--candle-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 25px;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--bone);
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-title .highlight {
+            color: var(--candle);
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--parchment);
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .hero-vow {
+            padding: 30px 40px;
+            background: rgba(114, 47, 55, 0.15);
+            border-left: 3px solid var(--blood);
+            margin-bottom: 50px;
+            font-size: 18px;
+            font-style: italic;
+            color: var(--parchment);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blood-dark) 0%, var(--blood) 100%);
+            color: var(--bone);
+            padding: 18px 40px;
+            border: none;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--blood) 0%, var(--rust) 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--parchment);
+            padding: 18px 40px;
+            border: 2px solid var(--ash);
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--parchment);
+            color: var(--bone);
+        }
+
+        .detection {
+            padding: 120px 0;
+            background: var(--charcoal);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+
+        .section-eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--candle-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--bone);
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .section-description {
+            font-size: 20px;
+            color: var(--parchment);
+            font-style: italic;
+        }
+
+        .detection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .detection-card {
+            padding: 50px 40px;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(139, 69, 19, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .detection-card:hover {
+            border-color: rgba(244, 164, 96, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .detection-icon {
+            font-size: 36px;
+            margin-bottom: 25px;
+        }
+
+        .detection-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--bone);
+            margin-bottom: 15px;
+        }
+
+        .detection-description {
+            color: var(--parchment);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .flags-section {
+            padding: 120px 0;
+            background: var(--void);
+        }
+
+        .flags-showcase {
+            margin-top: 60px;
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+        }
+
+        .flags-header {
+            background: rgba(114, 47, 55, 0.2);
+            padding: 35px 50px;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+        }
+
+        .flags-title {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--bone);
+        }
+
+        .flags-subtitle {
+            color: var(--parchment);
+            font-size: 16px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .flags-grid { padding: 40px 50px; }
+
+        .flag-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 30px;
+            padding: 25px 0;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.15);
+            align-items: center;
+        }
+
+        .flag-row:last-child { border-bottom: none; }
+
+        .flag-code {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--candle);
+            letter-spacing: 0.1em;
+        }
+
+        .flag-description {
+            font-size: 17px;
+            color: var(--parchment);
+        }
+
+        .evidence-section {
+            padding: 120px 0;
+            background: var(--charcoal);
+        }
+
+        .evidence-box {
+            background: rgba(13, 13, 13, 0.8);
+            border: 2px solid var(--blood);
+            padding: 60px;
+            margin-top: 60px;
+        }
+
+        .evidence-header {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--candle);
+            margin-bottom: 30px;
+            letter-spacing: 0.05em;
+        }
+
+        .questions-list {
+            list-style: none;
+            counter-reset: question;
+        }
+
+        .questions-list li {
+            counter-increment: question;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+            font-size: 18px;
+            color: var(--parchment);
+        }
+
+        .questions-list li:last-child { border-bottom: none; }
+
+        .questions-list li::before {
+            content: counter(question) ".";
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            color: var(--blood);
+            margin-right: 15px;
+        }
+
+        .evidence-note {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(114, 47, 55, 0.15);
+            border-left: 3px solid var(--blood);
+            font-style: italic;
+            color: var(--parchment);
+        }
+
+        .footer {
+            background: var(--void);
+            color: var(--parchment);
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(139, 69, 19, 0.3);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand { max-width: 450px; }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--bone);
+            margin-bottom: 20px;
+            letter-spacing: 0.15em;
+        }
+
+        .footer-logo::after {
+            content: '™';
+            font-size: 14px;
+            vertical-align: super;
+            opacity: 0.6;
+        }
+
+        .footer-tagline {
+            font-size: 18px;
+            color: var(--parchment);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .footer-description {
+            color: var(--ash);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-contact a {
+            color: var(--parchment);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact a:hover { color: var(--candle); }
+
+        .footer-section h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--bone);
+            margin-bottom: 25px;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-section a {
+            color: var(--ash);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover { color: var(--parchment); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(139, 69, 19, 0.2);
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .footer-legal {
+            color: var(--ash);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1024px) {
+            .detection-grid { grid-template-columns: 1fr; }
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 42px; }
+            .section-title { font-size: 32px; }
+            .flag-row { grid-template-columns: 1fr; gap: 10px; }
+            .footer-main { grid-template-columns: 1fr; gap: 30px; }
+            .hero-container, .container, .footer-container, .nav-container { padding: 0 24px; }
+            .evidence-box { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">SAINT JUDE</div>
+            <div class="nav-links">
+                <a href="#detection" class="nav-link">Detection</a>
+                <a href="#flags" class="nav-link">The Five Flags</a>
+                <a href="#evidence" class="nav-link">Evidence Packets</a>
+                <a href="mailto:TheForgottenCode@gmail.com?subject=SAINT%20JUDE%20Inquiry" class="cta-nav">Request Access</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Medical System Abandonment Detection</div>
+                <h1 class="hero-title">No One Advances While Anyone Is <span class="highlight">Unaccounted For</span></h1>
+                <p class="hero-subtitle">Saint Jude detects when clinical uncertainty rises while care effort falls — the mathematical signature of quiet death.</p>
+                <div class="hero-vow">
+                    <strong>The Vow:</strong> What was crushed here will not be converted into lesson, content, or inspiration. What was silenced here will not be forced to speak. Saint Jude does not save. Saint Jude witnesses.
+                </div>
+                <div class="hero-buttons">
+                    <a href="mailto:TheForgottenCode@gmail.com?subject=SAINT%20JUDE%20License%20Inquiry" class="btn-primary">Request License</a>
+                    <a href="#detection" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="detection" id="detection">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">The Core Failure</div>
+                <h2 class="section-title">The Machine Fails Through Optimization</h2>
+                <p class="section-description">Modern medical systems optimize for risk containment, not life continuity. Anything that doesn't resolve quickly gets flagged as noise. Humans tagged as noise become lost causes.</p>
+            </div>
+
+            <div class="detection-grid">
+                <div class="detection-card">
+                    <div class="detection-icon">📈</div>
+                    <h3 class="detection-title">Drift Detection</h3>
+                    <p class="detection-description">Watches for the pattern that kills: uncertainty rising (more unknowns, worsening symptoms) while effort falls (fewer orders, copy-forward notes). This is the mathematical signature of abandonment.</p>
+                </div>
+
+                <div class="detection-card">
+                    <div class="detection-icon">🔒</div>
+                    <h3 class="detection-title">Anti-Gaming Locks</h3>
+                    <p class="detection-description">Cannot be silenced by reassuring documentation. Auto-detects contradictions between "stable" notes and spiking risk. You cannot write your way out of danger.</p>
+                </div>
+
+                <div class="detection-card">
+                    <div class="detection-icon">⏱️</div>
+                    <h3 class="detection-title">Silence Detection</h3>
+                    <p class="detection-description">Auto-flags when high uncertainty exists with no reassessment for 8+ hours. You cannot abandon through inaction.</p>
+                </div>
+
+                <div class="detection-card">
+                    <div class="detection-icon">🚫</div>
+                    <h3 class="detection-title">De-escalation Gate</h3>
+                    <p class="detection-description">Blocks discharge or transfer when uncertainty remains unresolved. You cannot move on until questions are answered.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="flags-section" id="flags">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">System Pathology</div>
+                <h2 class="section-title">The Jude Five</h2>
+                <p class="section-description">Five flags that mark the patterns of institutional abandonment</p>
+            </div>
+
+            <div class="flags-showcase">
+                <div class="flags-header">
+                    <h3 class="flags-title">Abandonment Pattern Flags</h3>
+                    <p class="flags-subtitle">Each flag marks a specific failure mode in medical system behavior</p>
+                </div>
+                <div class="flags-grid">
+                    <div class="flag-row">
+                        <div class="flag-code">PO</div>
+                        <div class="flag-description"><strong>Protocol Override</strong> — Policy blocks needed care without alternative pathway. "Doesn't meet criteria." "Not covered."</div>
+                    </div>
+                    <div class="flag-row">
+                        <div class="flag-code">NC</div>
+                        <div class="flag-description"><strong>Narrative Collapse</strong> — Patient story ignored, contradicted, or fragmented. Copy-forward notes while patient deteriorates.</div>
+                    </div>
+                    <div class="flag-row">
+                        <div class="flag-code">TC</div>
+                        <div class="flag-description"><strong>Time Compression</strong> — Decisions forced under artificial urgency. "Must decide now." Discharge pressure before resolution.</div>
+                    </div>
+                    <div class="flag-row">
+                        <div class="flag-code">LD</div>
+                        <div class="flag-description"><strong>Liability Drift</strong> — Risk management logic overtakes clinical problem-solving. Defensive documentation replacing care.</div>
+                    </div>
+                    <div class="flag-row">
+                        <div class="flag-code">QW</div>
+                        <div class="flag-description"><strong>Quiet Withdrawal</strong> — Monitoring decreases while danger remains unresolved. "Nothing more we can do" without specialty consult. This is where most death happens.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="evidence-section" id="evidence">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">The Weapon</div>
+                <h2 class="section-title">Evidence Packets</h2>
+                <p class="section-description">When RED triggers, Saint Jude generates non-negotiable documentation</p>
+            </div>
+
+            <div class="evidence-box">
+                <div class="evidence-header">The Five Questions (Must Be Answered in Writing)</div>
+                <ol class="questions-list">
+                    <li>What is the working diagnosis and your confidence level?</li>
+                    <li>What findings remain unexplained?</li>
+                    <li>What is the explicit plan to resolve them, with timeframe?</li>
+                    <li>If you refused a test/consult, what alternative pathway are you using?</li>
+                    <li>If de-escalating care, what objective evidence supports safety?</li>
+                </ol>
+                <div class="evidence-note">
+                    These questions cannot be dismissed. They become part of the permanent record. Saint Jude makes quiet death expensive.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">SAINT JUDE</div>
+                    <p class="footer-tagline">Patron of Lost Causes</p>
+                    <p class="footer-description">Detection engine for medical system abandonment. For patient advocates, quality improvement teams, families tracking loved ones' care, and anyone who refuses to let quiet death go undocumented.</p>
+                    <div class="footer-contact">
+                        <a href="mailto:TheForgottenCode@gmail.com">TheForgottenCode@gmail.com</a>
+                        <a href="tel:423-388-8304">423-388-8304</a>
+                        <a href="#">Jennifer Leigh West</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Licensing</h4>
+                    <ul>
+                        <li><a href="mailto:TheForgottenCode@gmail.com?subject=Individual%20License">Individual License</a></li>
+                        <li><a href="mailto:TheForgottenCode@gmail.com?subject=Institutional%20License">Institutional License</a></li>
+                        <li><a href="mailto:TheForgottenCode@gmail.com?subject=Research%20License">Research License</a></li>
+                        <li><a href="mailto:TheForgottenCode@gmail.com?subject=Training">Training</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Institute</h4>
+                    <ul>
+                        <li><a href="#">The Forgotten Code Research Institute</a></li>
+                        <li><a href="#">Healthcare Accountability</a></li>
+                        <li><a href="#">Patient Advocacy</a></li>
+                        <li><a href="#">Quality Improvement</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-legal">© 2026 Jennifer Leigh West. SAINT JUDE™ is proprietary licensed software. Saint Jude does not save. Saint Jude witnesses. That is enough.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
